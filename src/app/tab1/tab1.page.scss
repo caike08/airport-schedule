@@ -37,4 +37,8 @@
   ion-badge {
     color: #FFF;
   }
+
+  .finished-loading {
+    transition: opacity ease-in-out 1s;
+  }
 }

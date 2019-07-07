@@ -3,6 +3,8 @@ import { StorageService } from '../services/storage/storage.service';
 import { AirportsFinderService } from '../services/airportfinder/airportsfinder.service';
 import { AlertService } from '../services/alertservice/alert.service';
 import { AirportsScheduleService } from '../services/airportschedule/airportschedule.service';
+import { Subject, Observable, of } from 'rxjs';
+import { debounceTime, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tab1',
@@ -14,6 +16,8 @@ export class Tab1Page {
   public airport: any = {};
   public loading: boolean;
   public flightList: any = [];
+  public displaySearchBar: boolean;
+  private filterString: Subject<string> = new Subject<string>();
 
   constructor(
     private storageService: StorageService,
@@ -51,6 +55,17 @@ export class Tab1Page {
       });
   }
 
+  ionViewDidLoad() {
+    this.filterString
+      .pipe(
+        debounceTime(300),
+        switchMap(value => of(this.filter(value)))
+      )
+      .subscribe(value => {
+        this.flightList = value;
+      });
+  }
+
   chooseAirport() {
     this.alertService.showSelectAirportAlert(this.airportList, (data) => {
       this.airport = data;
@@ -73,6 +88,28 @@ export class Tab1Page {
       });
   }
 
+  showSearchBar() {
+    this.displaySearchBar = !this.displaySearchBar;
+  }
+
+  searchFlights(event: any) {
+    this.filterString.next(event.detail.value);
+  }
+
+  filter(value: string): any[] {
+    return this.flightList.filter(item => {
+      const flightCode = !!item && !!item.airline && !!item.airline.code ? item.airline.code : '';
+      const flightNumber = !!item && !!item.flightNumber ? item.flightNumber : '';
+      const flightStatus = !!item && !!item.flightStatusPublicLangTransl ? item.flightStatusPublicLangTransl : '';
+
+
+      return !!flightCode && flightCode.includes(value) ||
+             !!flightNumber && flightNumber.toString().includes(value) ||
+             !!flightStatus && flightStatus.includes(value) ||
+             !!item && !!item.route && item.route.includes(value);
+    });
+  }
+
   getBadgeColor(status: string): string {
     switch (status) {
       case 'Arrived':
@@ -82,7 +119,7 @@ export class Tab1Page {
         return 'danger';
 
       case 'Delayed departure':
-        return 'warning'
+        return 'warning';
 
       default:
         return 'primary';

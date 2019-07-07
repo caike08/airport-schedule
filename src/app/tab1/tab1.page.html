@@ -15,7 +15,7 @@
 </ion-header>
 
 <ion-content>
-  <app-loading [color]="primary" *ngIf="loading; else departureList"></app-loading>
+  <app-loading [color]="primary" *ngIf="loading; else departureList" [ngClass]="{'finished-loading': !loading}"></app-loading>
 
   <ng-template #departureList>
     <ion-searchbar placeholder="Filter by status" animated (ionChange)="searchFlights($event)" mode="ios" *ngIf="displaySearchBar"></ion-searchbar>

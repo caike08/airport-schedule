@@ -1,10 +1,13 @@
-<ion-grid>
-  <ion-row>
-    <ion-col>
-      <div class="loading-container">
-        <p text-center>Fetching data</p>
-        <ion-progress-bar [color]='color' type="indeterminate"></ion-progress-bar>
+<div class="loading-screen">
+  <div class="loading-container">
+    <div class="animation-container">
+      <ion-icon name="airplane" class="airplane-loading"></ion-icon>
+      <div class="streams">
+        <div class="stream"></div>
+        <div class="stream"></div>
+        <div class="stream"></div>
       </div>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+    </div>
+    <p text-center>Fetching data</p>
+  </div>
+</div>
