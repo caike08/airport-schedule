@@ -1,0 +1,14 @@
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  p {
+    text-transform: lowercase;
+    font-size: 1rem;
+  }
+  ion-progress-bar {
+    max-width: 80%;
+    align-self: center;
+  }
+}

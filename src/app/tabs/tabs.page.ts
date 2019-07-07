@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+// import { GeolocationService } from '../services/geolocationservice/geolocation.service';
 
 @Component({
   selector: 'app-tabs',
@@ -7,6 +8,18 @@ import { Component } from '@angular/core';
 })
 export class TabsPage {
 
-  constructor() {}
+  constructor(
+    // private geolocationService: GeolocationService,
+  ) {};
+
+  ionViewWillEnter() {
+
+  }
+
+  ionViewDidEnter() {
+
+  }
+
+
 
 }
