@@ -1,44 +1,9 @@
-.flight {
-  display: flex;
-  padding: 5px;
-  ion-col {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-    .item {
-      font-size: .9rem;
-      font-weight: bold;
-      margin: 5px 0;
-    }
-    .desc {
-      font-size: .8rem;
-      margin: 0;
-    }
-
-    p {
-      display: flex;
-      align-content: center;
-    }
-
-    p > span {
-      margin-left: 3px;
-    }
-
-    p > span:first-child {
-      margin: 0;
-    }
-
-    p > span:last-child ion-icon {
-      display: none;
-    }
-  }
-
-  ion-badge {
-    color: #FFF;
-  }
-
-  .finished-loading {
-    transition: opacity ease-in-out 1s;
-  }
+.finished-loading {
+  transition: opacity ease-in-out 1s;
 }
+
+app-flight-card {
+  width: 100%;
+  display: flex;
+}
+

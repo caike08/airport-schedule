@@ -12,4 +12,8 @@ export class AirportsFinderService {
     return this.airportFinderProvider.getNearestAirports(lat, long);
   }
 
+  getAirlineLogo(icao: string, size: number): string {
+    return this.airportFinderProvider.getAirlineLogo(icao, size);
+  }
+
 }

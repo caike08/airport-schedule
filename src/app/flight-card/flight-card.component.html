@@ -1,0 +1,44 @@
+<div class="flight">
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col no-padding>
+        <div class="header">
+          <img *ngIf="logo" class="logo" [src]="logo"
+            alt="logo" />
+          <p class="flight-code">Flight # {{ flight?.airline?.code + ' ' + flight?.flightNumber }}</p>
+          <p class="date">{{ flight?.flightScheduleDate | date: 'MMM d, y' }}</p>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row class="border-bottom">
+      <ion-col size="7">
+        <p class="item">Route:</p>
+        <p class="desc">
+          <span *ngFor="let route of flight.route">{{ route }} <ion-icon name="arrow-dropright"></ion-icon></span>
+        </p>
+      </ion-col>
+      <ion-col size="5">
+        <p class="item">Aircraft</p>
+        <p class="desc">
+          <span *ngIf="flight?.flightLegs[0]?.aircraft.typeName">
+            {{ flight?.flightLegs[0]?.aircraft.typeName }}
+          </span>
+          <span *ngIf="!flight?.flightLegs[0]?.aircraft.typeName" text-center>
+            -
+          </span>
+        </p>
+      </ion-col>
+      <ion-col size="7">
+        <p class="item">Airline:</p>
+        <p class="desc" *ngIf="flight?.airline?.name">{{ flight?.airline?.name }}</p>
+        <p class="desc" *ngIf="!flight?.airline?.name">-</p>
+      </ion-col>
+      <ion-col size="5">
+        <p class="item">Status:</p>
+        <ion-badge [color]="getBadgeColor(flight?.flightStatusPublicLangTransl)">
+          {{ flight?.flightStatusPublicLangTransl }}
+        </ion-badge>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>

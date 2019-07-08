@@ -1,0 +1,85 @@
+.flight {
+  display: flex;
+  padding: 10px 5px;
+  width: 100%;
+
+  .header {
+    display: inline-flex;
+    width: 100%;
+    background-color: var(--ion-color-medium);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 5px;
+    .logo {
+      width: 16px;
+      height: 16px;
+      display: flex;
+      flex-direction: column;
+      align-self: center;
+      justify-self: center;
+    }
+    p {
+      color: #FFF;
+      margin: 5px 0;
+      font-size: .9rem;
+    }
+
+    .flight-code {
+      flex-grow: 9;
+      align-self: flex-start;
+      text-align: start;
+      margin-left: 5px;
+    }
+
+    .date {
+      align-self: flex-end;
+      text-align: end;
+      margin-right: 5px;
+    }
+  }
+
+  .border-bottom {
+    border: 1px solid var(--ion-color-light-shade);
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 0 5px 5px 5px;
+  }
+
+  ion-col {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    .item {
+      font-size: .9rem;
+      font-weight: bold;
+      margin: 5px 0;
+    }
+    .desc {
+      font-size: .8rem;
+      margin: 0;
+    }
+
+    p {
+      display: flex;
+      align-items: center;
+    }
+
+    span {
+      margin-left: 3px;
+      align-items: center;
+    }
+
+    span:first-child {
+      margin: 0;
+    }
+
+    span:last-child ion-icon {
+      display: none;
+    }
+  }
+
+  ion-badge {
+    color: #FFF;
+  }
+}

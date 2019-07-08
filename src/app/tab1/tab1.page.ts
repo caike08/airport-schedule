@@ -68,17 +68,21 @@ export class Tab1Page {
 
   chooseAirport() {
     this.alertService.showSelectAirportAlert(this.airportList, (data) => {
-      this.airport = data;
-      this.storageService.set('selectedAirport', data);
-      this.fetchData(this.airport);
+      if (data) {
+        this.airport = data;
+        this.storageService.set('selectedAirport', data);
+        this.fetchData(this.airport);
+      }
     });
   }
 
   fetchData(airport: any): Promise<any> {
     this.loading = true;
+    this.flightList = [];
     return this.airportScheduleService.getScheduledFlightsFrom(this.airport.code)
       .then(result => {
         this.flightList = result.operationalFlights;
+        // console.log(this.flightList[0]);
         this.loading = false;
         this.changeRef.detectChanges();
       })
@@ -86,6 +90,10 @@ export class Tab1Page {
         this.loading = false;
         this.changeRef.detectChanges();
       });
+  }
+
+  getAirlineLogo(icao: string): string {
+    return this.airportFinderService.getAirlineLogo(icao, 32);
   }
 
   showSearchBar() {
@@ -108,22 +116,6 @@ export class Tab1Page {
              !!flightStatus && flightStatus.includes(value) ||
              !!item && !!item.route && item.route.includes(value);
     });
-  }
-
-  getBadgeColor(status: string): string {
-    switch (status) {
-      case 'Arrived':
-        return 'success';
-
-      case 'Cancelled':
-        return 'danger';
-
-      case 'Delayed departure':
-        return 'warning';
-
-      default:
-        return 'primary';
-    }
   }
 
   private async initLocationAndAirportList(): Promise<any> {

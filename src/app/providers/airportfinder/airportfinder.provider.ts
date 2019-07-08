@@ -1,19 +1,24 @@
 // fa2b142942msh96228da3f528cf3p135b18jsn7445a5be6
 
 import { Injectable } from '@angular/core';
-// import { ConnectionService } from '../../services/connection/connection.service';
-// import { BaseProvider } from '../base/base.provider';
+import { ConnectionService } from '../../services/connection/connection.service';
+import { BaseProvider } from '../base/base.provider';
 // import { HttpHeaders, HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class AirportFinderProvider {
 
   constructor(
-    // private baseProvider: BaseProvider,
-    // private connectionService: ConnectionService,
+    private baseProvider: BaseProvider,
+    private connectionService: ConnectionService,
     // private httpClient: HttpClient,
   ) {
 
+  }
+
+  getAirlineLogo(icao: string, size: number): string {
+    const url = `${this.connectionService.kiwiImagesURL}/${size}/${icao}.png`;
+    return url;
   }
 
   getNearestAirports(lat: string, long: string): Promise<any> {
