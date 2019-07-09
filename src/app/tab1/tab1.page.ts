@@ -3,8 +3,8 @@ import { StorageService } from '../services/storage/storage.service';
 import { AirportsFinderService } from '../services/airportfinder/airportsfinder.service';
 import { AlertService } from '../services/alertservice/alert.service';
 import { AirportsScheduleService } from '../services/airportschedule/airportschedule.service';
-import { Subject, Observable, of } from 'rxjs';
-import { debounceTime, switchMap } from 'rxjs/operators';
+import { Subject, of } from 'rxjs';
+import { debounceTime, switchMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tab1',
@@ -16,8 +16,10 @@ export class Tab1Page {
   public airport: any = {};
   public loading: boolean;
   public flightList: any = [];
+  public flightListFiltered: any = [];
   public displaySearchBar: boolean;
   private filterString: Subject<string> = new Subject<string>();
+  public isFiltering: boolean;
 
   constructor(
     private storageService: StorageService,
@@ -30,6 +32,16 @@ export class Tab1Page {
   }
 
   ionViewDidEnter() {
+    this.filterString
+      .pipe(
+        debounceTime(300),
+        switchMap(input => of(this.filter(input))),
+      )
+      .subscribe(data => {
+        this.isFiltering = false;
+        this.flightListFiltered = data;
+      });
+
     this.initLocationAndAirportList()
       .then((airportList: any) => {
         this.airportList = !!airportList && airportList.data.airports ?
@@ -55,17 +67,6 @@ export class Tab1Page {
       });
   }
 
-  ionViewDidLoad() {
-    this.filterString
-      .pipe(
-        debounceTime(300),
-        switchMap(value => of(this.filter(value)))
-      )
-      .subscribe(value => {
-        this.flightList = value;
-      });
-  }
-
   chooseAirport() {
     this.alertService.showSelectAirportAlert(this.airportList, (data) => {
       if (data) {
@@ -79,9 +80,10 @@ export class Tab1Page {
   fetchData(airport: any): Promise<any> {
     this.loading = true;
     this.flightList = [];
-    return this.airportScheduleService.getScheduledFlightsFrom(this.airport.code)
+    return this.airportScheduleService.getScheduledFlightsFrom(airport.code)
       .then(result => {
         this.flightList = result.operationalFlights;
+        this.flightListFiltered = [... this.flightList];
         // console.log(this.flightList[0]);
         this.loading = false;
         this.changeRef.detectChanges();
@@ -101,6 +103,7 @@ export class Tab1Page {
   }
 
   searchFlights(event: any) {
+    this.isFiltering = true;
     this.filterString.next(event.detail.value);
   }
 
@@ -108,13 +111,14 @@ export class Tab1Page {
     return this.flightList.filter(item => {
       const flightCode = !!item && !!item.airline && !!item.airline.code ? item.airline.code : '';
       const flightNumber = !!item && !!item.flightNumber ? item.flightNumber : '';
-      const flightStatus = !!item && !!item.flightStatusPublicLangTransl ? item.flightStatusPublicLangTransl : '';
-
+      const flightStatus = !!item && !!item.flightStatusPublicLangTransl ? item.flightStatusPublicLangTransl.toLowerCase() : '';
+      const airlineName = !!item && !!item.airline && !!item.airline.name ? item.airline.name.toLowerCase() : '';
 
       return !!flightCode && flightCode.includes(value) ||
              !!flightNumber && flightNumber.toString().includes(value) ||
-             !!flightStatus && flightStatus.includes(value) ||
-             !!item && !!item.route && item.route.includes(value);
+             !!flightStatus && flightStatus.includes(value.toLowerCase()) ||
+             !!item && !!item.route && item.route.includes(value) ||
+             !!airlineName && airlineName.includes(value.toLowerCase());
     });
   }
 

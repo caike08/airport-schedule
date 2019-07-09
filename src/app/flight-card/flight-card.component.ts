@@ -24,6 +24,9 @@ export class FlightCardComponent implements OnInit {
       case 'Delayed departure':
         return 'warning';
 
+      case 'New departure time':
+          return 'secondary';
+
       default:
         return 'primary';
     }

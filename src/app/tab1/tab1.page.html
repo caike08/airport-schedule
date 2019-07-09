@@ -24,15 +24,17 @@
   </app-loading>
 
   <ng-template #departureList>
-    <ion-searchbar placeholder="Filter by status" animated (ionChange)="searchFlights($event)" mode="ios"
+    <ion-searchbar placeholder="Filter" animated (ionChange)="searchFlights($event)" mode="ios"
       *ngIf="displaySearchBar"></ion-searchbar>
 
-    <ion-list *ngIf="flightList.length > 0">
-      <ion-item *ngFor="let flight of flightList" lines="none">
+    <ion-spinner *ngIf="isFiltering" name="lines"></ion-spinner>
+
+    <ion-list *ngIf="flightListFiltered.length > 0 && !isFiltering">
+      <ion-item *ngFor="let flight of flightListFiltered" lines="none">
         <app-flight-card [flight]="flight" [logo]="getAirlineLogo(flight?.airline?.code)"></app-flight-card>
       </ion-item>
     </ion-list>
-    <ion-list *ngIf="flightList.length == 0">
+    <ion-list *ngIf="flightListFiltered.length == 0 && !isFiltering">
       <p text-center>No items to display :(</p>
     </ion-list>
   </ng-template>
