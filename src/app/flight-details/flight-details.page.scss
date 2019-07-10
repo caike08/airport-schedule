@@ -1,0 +1,123 @@
+.airline {
+  .name {
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-transform: capitalize;
+    margin: 5px;
+    text-align: left;
+  }
+  .flightnumber {
+    font-size: .8rem;
+    font-weight: normal;
+    margin: 0 5px;
+    text-align: left;
+  }
+}
+
+.status {
+  .item {
+    margin: 5px;
+    font-size: 1rem;
+    text-align: right;
+  }
+  div {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+
+    .desc {
+      font-size: .8rem;
+      font-weight: normal;
+      margin: 0 0 0 5px;
+      text-align: right;
+      display: flex;
+      justify-self: flex-end;
+    }
+    .indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 100%;
+      display: flex;
+      align-self: center;
+      justify-self: flex-end;
+    }
+  }
+}
+
+.flight-route {
+  display: flex;
+  flex-direction: row;
+  margin: 20px 0;
+
+  .routes {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    .route {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 2;
+      max-width: 35%;
+      h1 {
+        margin: 10px 5px;
+        font-size: 2rem;
+      }
+
+      h5 {
+        font-size: .95rem;
+        margin: 0 5px;
+      }
+
+      p {
+        font-size: .55rem;
+        margin: 0 5px;
+      }
+    }
+
+    .arrival {
+      align-self: flex-end;
+      h1, h5, p {
+        text-align: right;
+      }
+    }
+
+    .departure {
+      align-self: flex-start;
+      h1, h5, p {
+        text-align: left;
+      }
+    }
+
+    ion-icon {
+      font-size: 2rem;
+      align-self: center;
+      justify-self: center;
+      transform: rotate(90deg);
+      flex-grow: 4;
+    }
+  }
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  .title {
+    margin: 0 5px;
+    font-size: 1rem;
+    text-align: left;
+    font-weight: bold;
+    align-self: flex-start;
+    display: flex;
+    flex-grow: 2;
+  }
+  .desc {
+    font-size: .8rem;
+    margin: 0 5px;
+    text-align: right;
+    align-self: flex-end;
+    display: flex;
+  }
+}

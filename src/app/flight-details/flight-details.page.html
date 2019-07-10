@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Flight details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="9">
+        <div class="airline">
+          <p class="name">{{ flight?.airline?.name }}</p>
+          <p class="flightnumber">{{ flight?.airline?.code }} {{ flight?.flightNumber }}</p>
+        </div>
+      </ion-col>
+      <ion-col size="3">
+        <div class="status">
+          <p class="item">Status</p>
+          <div>
+            <span class="indicator"
+              [ngStyle]="{'background-color': getStatusColor(flight?.flightStatusPublicLangTransl)}"></span>
+            <p class="desc" *ngIf="flight?.flightStatusPublicLangTransl"
+              [ngStyle]="{'color': getStatusColor(flight?.flightStatusPublicLangTransl)}">
+              {{ flight?.flightStatusPublicLangTransl }}</p>
+            <p class="desc" *ngIf="!flight?.flightStatusPublicLangTransl">-</p>
+          </div>
+        </div>
+      </ion-col>
+      <ion-col size="12">
+        <div class="flight-route">
+          <div class="routes" *ngFor="let route of flight?.flightLegs">
+            <div class="route departure">
+              <h5>{{ route?.departureInformation?.airport?.city?.name }}</h5>
+              <h1>{{ route?.departureInformation?.airport?.code }}</h1>
+              <p>{{ route?.departureInformation?.airport?.name }}</p>
+              <p>Terminal {{ route?.departureInformation?.airport?.places?.terminalCode }}</p>
+            </div>
+
+            <ion-icon name="airplane"></ion-icon>
+
+            <div class="route arrival">
+              <h5>{{ route?.arrivalInformation?.airport?.city?.name }}</h5>
+              <h1>{{ route?.arrivalInformation?.airport?.code }}</h1>
+              <p>{{ route?.arrivalInformation?.airport?.name }}</p>
+              <p>Terminal {{ route?.arrivalInformation?.airport?.places?.terminalCode }}</p>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row *ngFor="let route of flight?.flightLegs">
+      <ion-col size="12">
+        <div class="info">
+          <p class="title">Departure:</p>
+          <p class="desc">{{ route?.departureInformation?.times?.scheduled | date: 'medium' }}</p>
+        </div>
+      </ion-col>
+      <ion-col size="12">
+        <div class="info">
+          <p class="title">Arrival:</p>
+          <p class="desc">{{ route?.arrivalInformation?.times?.scheduled | date: 'medium' }}</p>
+        </div>
+      </ion-col>
+      <ion-col size="12">
+        <div class="info">
+          <p class="title">Duration:</p>
+          <p class="desc">{{ getFlightDuration(route?.scheduledFlightDuration) }}</p>
+        </div>
+      </ion-col>
+      <ion-col size="12">
+        <div class="info">
+          <p class="title">Aircraft:</p>
+          <p class="desc">{{ route?.aircraft?.typeName  }}</p>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -31,6 +31,4 @@ export class FlightCardComponent implements OnInit {
         return 'primary';
     }
   }
-
-
 }

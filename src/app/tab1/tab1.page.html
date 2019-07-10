@@ -31,7 +31,7 @@
 
     <ion-list *ngIf="flightListFiltered.length > 0 && !isFiltering">
       <ion-item *ngFor="let flight of flightListFiltered" lines="none">
-        <app-flight-card [flight]="flight" [logo]="getAirlineLogo(flight?.airline?.code)"></app-flight-card>
+        <app-flight-card [flight]="flight" [logo]="getAirlineLogo(flight?.airline?.code)" (click)="goToFlightDetails(flight)"></app-flight-card>
       </ion-item>
     </ion-list>
     <ion-list *ngIf="flightListFiltered.length == 0 && !isFiltering">

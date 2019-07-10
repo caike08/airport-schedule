@@ -21,6 +21,10 @@ import { IonicStorageModule } from '@ionic/storage';
 import { StorageService } from './services/storage/storage.service';
 import { AirportsScheduleService } from './services/airportschedule/airportschedule.service';
 import { AirportScheduleProvider } from './providers/airportschedule/airportschedule.provider';
+import { FlightStore } from './reducers/flights/flight.store';
+import { FlightQuery } from './reducers/flights/flight.query';
+import { FlightReducerService } from './reducers/flights/flight.reducer.service';
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +34,8 @@ import { AirportScheduleProvider } from './providers/airportschedule/airportsche
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    AkitaNgDevtools.forRoot(),
   ],
   providers: [
     StatusBar,
@@ -47,6 +52,9 @@ import { AirportScheduleProvider } from './providers/airportschedule/airportsche
     AirportsScheduleService,
     AirportScheduleProvider,
     TokenInterceptor,
+    FlightStore,
+    FlightQuery,
+    FlightReducerService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HTTP_INTERCEPTORS,
