@@ -48,7 +48,6 @@ import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
     AirportFinderProvider,
     AirportsFinderService,
     StorageService,
-    Storage,
     AirportsScheduleService,
     AirportScheduleProvider,
     TokenInterceptor,
